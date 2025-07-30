@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geolocation Test</title>
+  </head>
+  <body>
+    <button id="btn">Get Location</button>
+    <pre id="output"></pre>
+
+    <script>
+      document.getElementById('btn').addEventListener('click', () => {
+        const output = document.getElementById('output');
+        if (!navigator.geolocation) {
+          output.textContent = 'Geolocation not supported.';
+          return;
+        }
+
+        output.textContent = 'Requesting location...';
+
+        navigator.geolocation.getCurrentPosition(
+          pos => {
+            console.log('✅ Got position:', pos);
+          },
+          err => {
+            console.error('❌ Geolocation error', err);
+            alert('Error (' + err.code + '): ' + err.message);
+          },
+          {
+            timeout: 5000, // 5 seconds
+          }
+        );
+      });
+    </script>
+  </body>
+</html>

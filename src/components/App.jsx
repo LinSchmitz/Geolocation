@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 function useGeolocation() {
   const [isLoading, setIsLoading] = useState(false);
-  const [position, setPosition] = useState({});
+  const [position, setPosition] = useState({ lat: null, lng: null });
   const [error, setError] = useState(null);
 
   function getPosition() {
@@ -17,6 +17,7 @@ function useGeolocation() {
           lng: pos.coords.longitude,
         });
         setIsLoading(false);
+        setError(null);
       },
       error => {
         setError(error.message);
@@ -24,6 +25,7 @@ function useGeolocation() {
       }
     );
   }
+
   return { isLoading, position, error, getPosition };
 }
 
@@ -42,6 +44,9 @@ export default function App() {
     getPosition();
   }
 
+  console.log('Position:', lat, lng);
+  console.log('Error:', error);
+
   return (
     <div>
       <button onClick={handleClick} disabled={isLoading}>
@@ -49,10 +54,10 @@ export default function App() {
       </button>
 
       {isLoading && <p>Loading position...</p>}
-      {error && <p>{error}</p>}
+      {error && <p>Error: {error}</p>}
       {!isLoading && !error && lat && lng && (
         <p>
-          Your GPS position:
+          Your GPS position:{' '}
           <a
             target="_blank"
             rel="noreferrer"
