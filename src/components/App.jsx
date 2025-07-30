@@ -42,7 +42,7 @@ export default function App() {
       {error && <p>{error}</p>}
       {!isLoading && !error && lat && lng && (
         <p>
-          Your GPS position:{' '}
+          Your GPS position:
           <a
             target="_blank"
             rel="noreferrer"
